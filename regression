@@ -1,0 +1,54 @@
+#importing all needed modules
+
+import pandas as pd
+from pandas import DataFrame as df
+import matplotlib.pyplot as plt
+
+from sklearn.linear_model import LinearRegression
+
+#read the file of our csv data
+
+data= pd.read_csv('cost_revenue_clean (1).csv')
+print(data)
+
+desc=data.describe()
+print(desc)
+
+X=df(data, columns=['production_budget_usd'])
+y=df(data, columns=['worldwide_gross_usd'])
+
+#create a graph
+
+plt.figure(figsize=(15,10))
+plt.scatter(X,y, alpha=0.3)
+plt.title('Film Cost vs Global revenue')
+plt.xlabel('Production Budget $')
+plt.ylabel('WorldWide Gross $')
+plt.ylim(0,3000000000)
+plt.xlim(0,450000000)
+plt.show()
+
+#calculate the regression
+
+regression=LinearRegression()
+regression.fit(X,y)
+
+regression.coef_
+regression.intercept_
+
+#create 2 in 1 graphics
+
+plt.figure(figsize=(15,10))
+
+plt.scatter(X,y, alpha=0.3)
+plt.plot(X, regression.predict(X), color='pink', linewidth=4)
+
+plt.title('Film Cost vs Global revenue')
+plt.xlabel('Production Budget $')
+plt.ylabel('WorldWide Gross $')
+plt.ylim(0,3000000000)
+plt.xlim(0,450000000)
+
+plt.show()
+
+regression.score(X,y)
